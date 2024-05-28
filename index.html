@@ -37,9 +37,9 @@
           <div class="relative mr-4 md:w-full lg:w-full xl:w-1/2 w-2/4">
             <form name="submit-to-google-sheet">
             <label for="hero-field" class="leading-7 text-sm text-gray-400">Enter your email address for further updates</label>
-            <input type="email"name="email" id="hero-field" name="hero-field" class="w-full bg-gray-800 rounded bg-opacity-40 border border-gray-700 focus:ring-2 focus:ring-red-900 focus:bg-transparent focus:border-red-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            <input type="text" name="Email" id="hero-field" placeholder="Email" required class="w-full bg-gray-800 rounded bg-opacity-40 border border-gray-700 focus:ring-2 focus:ring-red-900 focus:bg-transparent focus:border-red-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
           </div>
-          <button class="inline-flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded text-lg">Submit</button>
+          <button type="submit" class="inline-flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded text-lg">Submit</button>
         </form>
         </div>
         <p id ="msg" class="text-sm mt-2 text-gray-500 mb-8 w-full"></p>
@@ -66,39 +66,27 @@
         </div>
       </div>
       <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-        <img class="object-cover object-center rounded" alt="hero" src="https://source.unsplash.com/720x600/?technology,startup">
+        <!-- <img class="object-cover object-center rounded" alt="hero" src="https://source.unsplash.com/720x600/?technology,startup"> -->
+        <img class="object-cover object-center rounded" alt="hero" src="https://picsum.photos/id/60/720/600">
       </div>
     </div>
   </section>
-      <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwHysTgDLp0S_-Sjg_28NCSlaT-PNWA2ksqIGj6ZJPe1wRS8kUI87zICaPEhgTModSCfw/exec';
-const form = document.forms['submit-to-google-sheet'];
-const msg = document.getElementById("msg");
-const emailInput = form.querySelector('input[name="email"]');
-
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-form.addEventListener('submit', e => {
-    e.preventDefault();
-    if (!isValidEmail(emailInput.value)) {
-        msg.innerHTML = "Please enter a valid email address.";
-        return;
-    }
-
-    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwF-SYmQWuqFqOInwZQK6Thw9mKYYTr4P3N9ZzJbXCNM9fywaXlXPLGSPmqLAy-yaNAVQ/exec'
+    const form = document.forms['submit-to-google-sheet']
+    const msg = document.getElementById("msg")
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
         .then(response => {
-            msg.innerHTML = "Thank you for subscribing!";
-            setTimeout(function () {
-                msg.innerHTML = "";
-            }, 3000);
-            form.reset();
+          msg.innerHTML = "Thank you for subscribing!"
+          setTimeout(function(){
+            msg.innerHTML = ""
+          },3000)
+          form.reset()
         })
-        .catch(error => console.error('Error!', error.message));
-});
-
-      </script>
+        .catch(error => console.error('Error!', error.message))
+    })
+  </script>
 </body>
 </html>
